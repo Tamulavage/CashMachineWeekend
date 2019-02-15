@@ -20,6 +20,10 @@ public class Bank {
         accounts.put(2000, new PremiumAccount(new AccountData(
                 2000, "Example 2", "example2@gmail.com", 200
         )));
+
+        accounts.put(3000, new PremiumAccount(new AccountData(
+                3000, "Example 3", "example2@gmail.com", 900
+        )));
     }
 
     public ActionResult<AccountData> getAccountById(int id) {
@@ -28,7 +32,7 @@ public class Bank {
         if (account != null) {
             return ActionResult.success(account.getAccountData());
         } else {
-            return ActionResult.fail("No account with id: " + id + "\nTry account 1000 or 2000");
+            return ActionResult.fail("No account with id: " + id + "\nTry account 1000 , 2000, 3000");
         }
     }
 
