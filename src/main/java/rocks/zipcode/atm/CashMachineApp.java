@@ -21,6 +21,11 @@ public class CashMachineApp extends Application {
     private TextField field = new TextField();
     private TextField amountField = new TextField();
     private CashMachine cashMachine = new CashMachine(new Bank());
+    TextField accountNum = new TextField();
+    TextField name = new TextField();
+    TextField e_mail = new TextField();
+    TextField balance = new TextField();
+    TextField alert = new TextField();
 
     private Parent createContent() {
         VBox vbox = new VBox(10);
@@ -33,11 +38,11 @@ public class CashMachineApp extends Application {
         amountField.setDisable(true);
 
 
-        TextField accountNum = new TextField();
+/*        TextField accountNum = new TextField();
         TextField name = new TextField();
         TextField e_mail = new TextField();
         TextField balance = new TextField();
-        TextField alert = new TextField();
+        TextField alert = new TextField();*/
         alert.setVisible(false);  // default to false - only show if alert is needed
 
      //   TextArea areaInfo = new TextArea();
@@ -58,17 +63,7 @@ public class CashMachineApp extends Application {
 
 
             AccountData accountDataDisplay =  cashMachine.getAccountData();
-            accountNum.setText("Account Number : "+accountDataDisplay.getId());
-            name.setText("name : "+accountDataDisplay.getName());
-            e_mail.setText("e_mail : "+accountDataDisplay.getEmail());
-            balance.setText("balance : "+accountDataDisplay.getBalance());
-            if(!accountDataDisplay.getAlert().isEmpty()) {
-                alert.setText("Alert : " + accountDataDisplay.getAlert());
-                alert.setVisible(true);
-            }
-            else {
-                alert.setVisible(false);
-            }
+            setLocalTextFields(accountDataDisplay);
      //       areaInfo.setText(cashMachine.toString());
         });
 
@@ -81,17 +76,7 @@ public class CashMachineApp extends Application {
 
 
             AccountData accountDataDisplay =  cashMachine.getAccountData();
-            accountNum.setText("Account Number : "+accountDataDisplay.getId());
-            name.setText("name : "+accountDataDisplay.getName());
-            e_mail.setText("e_mail : "+accountDataDisplay.getEmail());
-            balance.setText("balance : "+accountDataDisplay.getBalance());
-            if(!accountDataDisplay.getAlert().isEmpty()) {
-                alert.setText("Alert : " + accountDataDisplay.getAlert());
-                alert.setVisible(true);
-            }
-            else {
-                alert.setVisible(false);
-            }
+            setLocalTextFields(accountDataDisplay);
 
        //     areaInfo.setText(cashMachine.toString());
         });
@@ -100,8 +85,20 @@ public class CashMachineApp extends Application {
         btnExit.setDisable(true);
 
         btnExit.setOnAction(e -> {
+            btnExit.setDisable(true);
+            btnWithdraw.setDisable(true);
+            btnDeposit.setDisable(true);
+            amountField.setDisable(true);
+            amountField.clear();
+            field.clear();
+            accountNum.clear();
+            name.clear();
+            e_mail.clear();
+            balance.clear();
+            alert.clear();
+
             cashMachine.exit();
-            
+
 
 
           //  areaInfo.setText(cashMachine.toString());
@@ -111,13 +108,28 @@ public class CashMachineApp extends Application {
         MenuItem menuItem1 = new MenuItem("1000");
         MenuItem menuItem2 = new MenuItem("2000");
         MenuItem menuItem3 = new MenuItem("3000");
+        MenuItem menuItemNew = new MenuItem("New Account");
 
-        MenuButton menuButton =new MenuButton("Account Login", null, menuItem1, menuItem2, menuItem3);
+
+        MenuButton menuButton =new MenuButton("Account Login", null, menuItem1,menuItem2,menuItem3,menuItemNew);
 
 
        // btnSubmit.setOnAction(e -> {
        //     int id = Integer.parseInt(field.getText());
 
+        menuItem1.setOnAction(e -> {
+
+            cashMachine.login(1000);
+            field.setText("2000");
+            btnExit.setDisable(false);
+            btnWithdraw.setDisable(false);
+            btnDeposit.setDisable(false);
+            amountField.setDisable(false);
+
+            AccountData accountDataDisplay =  cashMachine.getAccountData();
+            setLocalTextFields(accountDataDisplay);
+
+        });
         menuItem2.setOnAction(e -> {
 
             cashMachine.login(2000);
@@ -127,19 +139,21 @@ public class CashMachineApp extends Application {
             btnDeposit.setDisable(false);
             amountField.setDisable(false);
 
+            AccountData accountDataDisplay =  cashMachine.getAccountData();
+            setLocalTextFields(accountDataDisplay);
+
+        });
+        menuItem3.setOnAction(e -> {
+
+            cashMachine.login(3000);
+            field.setText("2000");
+            btnExit.setDisable(false);
+            btnWithdraw.setDisable(false);
+            btnDeposit.setDisable(false);
+            amountField.setDisable(false);
 
             AccountData accountDataDisplay =  cashMachine.getAccountData();
-            accountNum.setText("Account Number : "+accountDataDisplay.getId());
-            name.setText("name : "+accountDataDisplay.getName());
-            e_mail.setText("e_mail : "+accountDataDisplay.getEmail());
-            balance.setText("balance : "+accountDataDisplay.getBalance());
-            if(!accountDataDisplay.getAlert().isEmpty()) {
-                alert.setText("Alert : " + accountDataDisplay.getAlert());
-                alert.setVisible(true);
-            }
-            else {
-                alert.setVisible(false);
-            }
+            setLocalTextFields(accountDataDisplay);
 
         });
 
@@ -162,6 +176,21 @@ public class CashMachineApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+
+    private void setLocalTextFields(AccountData accountDataDisplay){
+        accountNum.setText("Account Number : "+accountDataDisplay.getId());
+        name.setText("name : "+accountDataDisplay.getName());
+        e_mail.setText("e_mail : "+accountDataDisplay.getEmail());
+        balance.setText("balance : "+accountDataDisplay.getBalance());
+        if(!accountDataDisplay.getAlert().isEmpty()) {
+            alert.setText("Alert : " + accountDataDisplay.getAlert());
+            alert.setVisible(true);
+        }
+        else {
+            alert.setVisible(false);
+        }
     }
 
 }
