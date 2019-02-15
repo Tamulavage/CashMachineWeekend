@@ -22,6 +22,11 @@ public abstract class Account {
     public boolean withdraw(int amount) {
         if (canWithdraw(amount)) {
             updateBalance(getBalance() - amount);
+            if((getBalance() - amount) < 0)
+            {
+                accountData.setAlert("Warning : overdraft");
+            }
+
             return true;
         } else {
             return false;

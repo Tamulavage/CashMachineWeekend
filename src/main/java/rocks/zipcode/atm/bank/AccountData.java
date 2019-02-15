@@ -10,12 +10,14 @@ public final class AccountData {
     private final String email;
 
     private final int balance;
+    private  String alert;
 
     AccountData(int id, String name, String email, int balance) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.balance = balance;
+        this.alert = "";
     }
 
     public int getId() {
@@ -30,15 +32,27 @@ public final class AccountData {
         return email;
     }
 
+    public void setAlert(String alert) {
+
+        this.alert = alert;
+    }
+
+    public String getAlert() { return alert;}
+
     public int getBalance() {
         return balance;
     }
 
     @Override
     public String toString() {
+        if(!alert.isEmpty()) {
+            alert = '\n' + "Alert: " + alert;
+        }
+
         return "Account id: " + id + '\n' +
                 "Name: " + name + '\n' +
                 "Email: " + email + '\n' +
-                "Balance: " + balance;
+                "Balance: " + balance 
+                  +alert;
     }
 }
