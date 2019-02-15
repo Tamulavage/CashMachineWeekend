@@ -1,13 +1,14 @@
 package rocks.zipcode.atm;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import rocks.zipcode.atm.bank.AccountData;
 import rocks.zipcode.atm.bank.Bank;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.layout.FlowPane;
@@ -26,6 +27,7 @@ public class CashMachineApp extends Application {
         vbox.setPrefSize(600, 600);
         field.setMaxWidth( 250);
         field.setText("Account Number");
+        field.setDisable(true);
         amountField.setMaxWidth( 250);
         amountField.setText("$$$$");
         amountField.setDisable(true);
@@ -99,14 +101,27 @@ public class CashMachineApp extends Application {
 
         btnExit.setOnAction(e -> {
             cashMachine.exit();
+            
 
 
           //  areaInfo.setText(cashMachine.toString());
         });
 
-        btnSubmit.setOnAction(e -> {
-            int id = Integer.parseInt(field.getText());
-            cashMachine.login(id);
+
+        MenuItem menuItem1 = new MenuItem("1000");
+        MenuItem menuItem2 = new MenuItem("2000");
+        MenuItem menuItem3 = new MenuItem("3000");
+
+        MenuButton menuButton =new MenuButton("Account Login", null, menuItem1, menuItem2, menuItem3);
+
+
+       // btnSubmit.setOnAction(e -> {
+       //     int id = Integer.parseInt(field.getText());
+
+        menuItem2.setOnAction(e -> {
+
+            cashMachine.login(2000);
+            field.setText("2000");
             btnExit.setDisable(false);
             btnWithdraw.setDisable(false);
             btnDeposit.setDisable(false);
@@ -130,11 +145,10 @@ public class CashMachineApp extends Application {
 
         FlowPane flowpane = new FlowPane();
 
-        flowpane.getChildren().add(btnSubmit);
         flowpane.getChildren().add(btnDeposit);
         flowpane.getChildren().add(btnWithdraw);
         flowpane.getChildren().add(btnExit);
-        vbox.getChildren().addAll(field, amountField, flowpane,accountNum,name,e_mail, balance, alert);
+        vbox.getChildren().addAll(menuButton, field, amountField, flowpane,accountNum,name,e_mail, balance, alert);
         return vbox;
     }
 
