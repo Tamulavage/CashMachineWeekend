@@ -18,11 +18,18 @@ import javafx.scene.layout.FlowPane;
 public class CashMachineApp extends Application {
 
     private TextField field = new TextField();
+    private TextField amountField = new TextField();
     private CashMachine cashMachine = new CashMachine(new Bank());
 
     private Parent createContent() {
         VBox vbox = new VBox(10);
         vbox.setPrefSize(600, 600);
+        field.setMaxWidth( 250);
+        field.setText("Account Number");
+        amountField.setMaxWidth( 250);
+        amountField.setText("$$$$");
+        amountField.setDisable(true);
+
 
         TextField accountNum = new TextField();
         TextField name = new TextField();
@@ -44,7 +51,7 @@ public class CashMachineApp extends Application {
         btnDeposit.setDisable(true);
 
         btnDeposit.setOnAction(e -> {
-            int amount = Integer.parseInt(field.getText());
+            float amount = Float.parseFloat(amountField.getText());
             cashMachine.deposit(amount);
 
 
@@ -67,7 +74,7 @@ public class CashMachineApp extends Application {
         btnWithdraw.setDisable(true);
 
         btnWithdraw.setOnAction(e -> {
-            int amount = Integer.parseInt(field.getText());
+            float amount = Float.parseFloat(amountField.getText());
             cashMachine.withdraw(amount);
 
 
@@ -103,7 +110,7 @@ public class CashMachineApp extends Application {
             btnExit.setDisable(false);
             btnWithdraw.setDisable(false);
             btnDeposit.setDisable(false);
-
+            amountField.setDisable(false);
 
 
             AccountData accountDataDisplay =  cashMachine.getAccountData();
@@ -127,7 +134,7 @@ public class CashMachineApp extends Application {
         flowpane.getChildren().add(btnDeposit);
         flowpane.getChildren().add(btnWithdraw);
         flowpane.getChildren().add(btnExit);
-        vbox.getChildren().addAll(field, flowpane,accountNum,name,e_mail, balance, alert);
+        vbox.getChildren().addAll(field, amountField, flowpane,accountNum,name,e_mail, balance, alert);
         return vbox;
     }
 
