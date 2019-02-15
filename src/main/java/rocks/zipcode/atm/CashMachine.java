@@ -22,6 +22,10 @@ public class CashMachine {
         accountData = data;
     };
 
+    public AccountData getAccountData (){
+        return  this.accountData;
+    }
+
     public void login(int id) {
         tryCall(
                 () -> bank.getAccountById(id),
@@ -50,6 +54,7 @@ public class CashMachine {
     public void exit() {
         if (accountData != null) {
             accountData = null;
+
         }
     }
 

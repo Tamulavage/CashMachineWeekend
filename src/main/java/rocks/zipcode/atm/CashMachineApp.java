@@ -1,5 +1,6 @@
 package rocks.zipcode.atm;
 
+import rocks.zipcode.atm.bank.AccountData;
 import rocks.zipcode.atm.bank.Bank;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -23,37 +24,101 @@ public class CashMachineApp extends Application {
         VBox vbox = new VBox(10);
         vbox.setPrefSize(600, 600);
 
-        TextArea areaInfo = new TextArea();
+        TextField accountNum = new TextField();
+        TextField name = new TextField();
+        TextField e_mail = new TextField();
+        TextField balance = new TextField();
+        TextField alert = new TextField();
+        alert.setVisible(false);  // default to false - only show if alert is needed
 
-        Button btnSubmit = new Button("Set Account ID");
-        btnSubmit.setOnAction(e -> {
-            int id = Integer.parseInt(field.getText());
-            cashMachine.login(id);
+     //   TextArea areaInfo = new TextArea();
 
-            areaInfo.setText(cashMachine.toString());
-        });
+
+        Button btnSubmit = new Button("Login with account ID");
+
+
+
+
 
         Button btnDeposit = new Button("Deposit");
+        btnDeposit.setDisable(true);
+
         btnDeposit.setOnAction(e -> {
             int amount = Integer.parseInt(field.getText());
             cashMachine.deposit(amount);
 
-            areaInfo.setText(cashMachine.toString());
+
+            AccountData accountDataDisplay =  cashMachine.getAccountData();
+            accountNum.setText("Account Number : "+accountDataDisplay.getId());
+            name.setText("name : "+accountDataDisplay.getName());
+            e_mail.setText("e_mail : "+accountDataDisplay.getEmail());
+            balance.setText("balance : "+accountDataDisplay.getBalance());
+            if(!accountDataDisplay.getAlert().isEmpty()) {
+                alert.setText("Alert : " + accountDataDisplay.getAlert());
+                alert.setVisible(true);
+            }
+            else {
+                alert.setVisible(false);
+            }
+     //       areaInfo.setText(cashMachine.toString());
         });
 
         Button btnWithdraw = new Button("Withdraw");
+        btnWithdraw.setDisable(true);
+
         btnWithdraw.setOnAction(e -> {
             int amount = Integer.parseInt(field.getText());
             cashMachine.withdraw(amount);
 
-            areaInfo.setText(cashMachine.toString());
+
+            AccountData accountDataDisplay =  cashMachine.getAccountData();
+            accountNum.setText("Account Number : "+accountDataDisplay.getId());
+            name.setText("name : "+accountDataDisplay.getName());
+            e_mail.setText("e_mail : "+accountDataDisplay.getEmail());
+            balance.setText("balance : "+accountDataDisplay.getBalance());
+            if(!accountDataDisplay.getAlert().isEmpty()) {
+                alert.setText("Alert : " + accountDataDisplay.getAlert());
+                alert.setVisible(true);
+            }
+            else {
+                alert.setVisible(false);
+            }
+
+       //     areaInfo.setText(cashMachine.toString());
         });
 
-        Button btnExit = new Button("Exit");
+        Button btnExit = new Button("Logout");
+        btnExit.setDisable(true);
+
         btnExit.setOnAction(e -> {
             cashMachine.exit();
 
-            areaInfo.setText(cashMachine.toString());
+
+          //  areaInfo.setText(cashMachine.toString());
+        });
+
+        btnSubmit.setOnAction(e -> {
+            int id = Integer.parseInt(field.getText());
+            cashMachine.login(id);
+            btnExit.setDisable(false);
+            btnWithdraw.setDisable(false);
+            btnDeposit.setDisable(false);
+
+
+
+            AccountData accountDataDisplay =  cashMachine.getAccountData();
+            accountNum.setText("Account Number : "+accountDataDisplay.getId());
+            name.setText("name : "+accountDataDisplay.getName());
+            e_mail.setText("e_mail : "+accountDataDisplay.getEmail());
+            balance.setText("balance : "+accountDataDisplay.getBalance());
+            if(!accountDataDisplay.getAlert().isEmpty()) {
+                alert.setText("Alert : " + accountDataDisplay.getAlert());
+                alert.setVisible(true);
+            }
+            else {
+                alert.setVisible(false);
+            }
+
         });
 
         FlowPane flowpane = new FlowPane();
@@ -62,9 +127,11 @@ public class CashMachineApp extends Application {
         flowpane.getChildren().add(btnDeposit);
         flowpane.getChildren().add(btnWithdraw);
         flowpane.getChildren().add(btnExit);
-        vbox.getChildren().addAll(field, flowpane, areaInfo);
+        vbox.getChildren().addAll(field, flowpane,accountNum,name,e_mail, balance, alert);
         return vbox;
     }
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -75,4 +142,5 @@ public class CashMachineApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }

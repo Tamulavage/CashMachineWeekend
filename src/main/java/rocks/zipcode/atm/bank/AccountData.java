@@ -40,6 +40,10 @@ public final class AccountData {
     public String getAlert() { return alert;}
 
     public int getBalance() {
+        if(this.balance > 0)
+        {// reset alert
+            alert = "";
+        }
         return balance;
     }
 
@@ -52,7 +56,7 @@ public final class AccountData {
         return "Account id: " + id + '\n' +
                 "Name: " + name + '\n' +
                 "Email: " + email + '\n' +
-                "Balance: " + balance 
+                "Balance: " + balance
                   +alert;
     }
 }
