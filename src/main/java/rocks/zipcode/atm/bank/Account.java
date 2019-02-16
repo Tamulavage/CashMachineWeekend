@@ -22,7 +22,7 @@ public abstract class Account {
     public boolean withdraw(float amount) {
         if (canWithdraw(amount)) {
             updateBalance(getBalance() - amount);
-            if((getBalance() - amount) < 0)
+            if(0 > (getBalance() - amount))
             {
                 accountData.setAlert("Warning : overdraft");
             }

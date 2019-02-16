@@ -26,6 +26,13 @@ public class CashMachine {
         return  this.accountData;
     }
 
+    public void setAccountData(int id, String name, String email, float initBalance){
+       tryCall(
+               () -> bank.newAccount("Basic", id , name, email, initBalance),
+               update
+       );
+    }
+
     public void login(int id) {
         tryCall(
                 () -> bank.getAccountById(id),

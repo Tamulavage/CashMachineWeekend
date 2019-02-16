@@ -1,12 +1,13 @@
 package rocks.zipcode.atm;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import rocks.zipcode.atm.bank.AccountData;
 import rocks.zipcode.atm.bank.Bank;
-import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -26,6 +27,9 @@ public class CashMachineApp extends Application {
     TextField e_mail = new TextField();
     TextField balance = new TextField();
     TextField alert = new TextField();
+    Button btnDeposit = new Button("Deposit");
+    Button btnWithdraw = new Button("Withdraw");
+    Button btnExit = new Button("Logout");
 
     private Parent createContent() {
         VBox vbox = new VBox(10);
@@ -38,23 +42,12 @@ public class CashMachineApp extends Application {
         amountField.setDisable(true);
 
 
-/*        TextField accountNum = new TextField();
-        TextField name = new TextField();
-        TextField e_mail = new TextField();
-        TextField balance = new TextField();
-        TextField alert = new TextField();*/
+
         alert.setVisible(false);  // default to false - only show if alert is needed
 
-     //   TextArea areaInfo = new TextArea();
 
 
-        Button btnSubmit = new Button("Login with account ID");
-
-
-
-
-
-        Button btnDeposit = new Button("Deposit");
+      //  Button btnDeposit = new Button("Deposit");
         btnDeposit.setDisable(true);
 
         btnDeposit.setOnAction(e -> {
@@ -64,10 +57,9 @@ public class CashMachineApp extends Application {
 
             AccountData accountDataDisplay =  cashMachine.getAccountData();
             setLocalTextFields(accountDataDisplay);
-     //       areaInfo.setText(cashMachine.toString());
         });
 
-        Button btnWithdraw = new Button("Withdraw");
+       // Button btnWithdraw = new Button("Withdraw");
         btnWithdraw.setDisable(true);
 
         btnWithdraw.setOnAction(e -> {
@@ -78,10 +70,9 @@ public class CashMachineApp extends Application {
             AccountData accountDataDisplay =  cashMachine.getAccountData();
             setLocalTextFields(accountDataDisplay);
 
-       //     areaInfo.setText(cashMachine.toString());
         });
 
-        Button btnExit = new Button("Logout");
+      //  Button btnExit = new Button("Logout");
         btnExit.setDisable(true);
 
         btnExit.setOnAction(e -> {
@@ -101,7 +92,6 @@ public class CashMachineApp extends Application {
 
 
 
-          //  areaInfo.setText(cashMachine.toString());
         });
 
 
@@ -113,14 +103,10 @@ public class CashMachineApp extends Application {
 
         MenuButton menuButton =new MenuButton("Account Login", null, menuItem1,menuItem2,menuItem3,menuItemNew);
 
-
-       // btnSubmit.setOnAction(e -> {
-       //     int id = Integer.parseInt(field.getText());
-
         menuItem1.setOnAction(e -> {
 
             cashMachine.login(1000);
-            field.setText("2000");
+            field.setText("1000");
             btnExit.setDisable(false);
             btnWithdraw.setDisable(false);
             btnDeposit.setDisable(false);
@@ -146,7 +132,7 @@ public class CashMachineApp extends Application {
         menuItem3.setOnAction(e -> {
 
             cashMachine.login(3000);
-            field.setText("2000");
+            field.setText("3000");
             btnExit.setDisable(false);
             btnWithdraw.setDisable(false);
             btnDeposit.setDisable(false);
@@ -154,6 +140,34 @@ public class CashMachineApp extends Application {
 
             AccountData accountDataDisplay =  cashMachine.getAccountData();
             setLocalTextFields(accountDataDisplay);
+
+        });
+
+        menuItemNew.setOnAction(e -> {
+
+
+
+            Stage newWindow = new Stage();
+            newWindow.setTitle("New Account");
+            newWindow.setScene(new Scene(createInternal()));
+
+            newWindow.show();
+
+            Button btnClose = new Button("Add New Account");
+        btnClose.setOnAction(b -> {
+            // int accountId = Integer.parseInt(field.getText());
+    /*        int accountId = 5;
+
+            cashMachine.setAccountData(accountId);
+            AccountData accountDataDisplay =  cashMachine.getAccountData();
+            setLocalTextFields(accountDataDisplay);*/
+
+        });
+
+
+
+//            AccountData accountDataDisplay =  cashMachine.getAccountData();
+ //           setLocalTextFields(accountDataDisplay);
 
         });
 
@@ -192,5 +206,76 @@ public class CashMachineApp extends Application {
             alert.setVisible(false);
         }
     }
+
+    private VBox createInternal() {
+        VBox internalVbox = new VBox(10);
+        internalVbox.setPrefSize(400, 400);
+
+       // Label label = new Label("test");
+        StackPane secLayout = new StackPane();
+
+        Scene secScene = new Scene(secLayout,400,400);
+
+
+        TextField accountDisplay = new TextField();
+        String initAccountText= "Account";
+        accountDisplay.setText(initAccountText);
+
+        TextField accountName = new TextField();
+        accountName.setText("Name");
+
+        TextField email = new TextField();
+        email.setText("e-mail");
+
+        TextField initBalance = new TextField();
+        initBalance.setText("initBalance");
+
+
+        Button btnAdd = new Button("Add New Account");
+
+        btnAdd.setOnAction(e -> {
+
+            if(initAccountText.equals(accountDisplay.getText())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("No account id");
+                alert.setContentText("No account to add");
+                alert.showAndWait();
+
+
+            }
+            else{
+            field.setText(accountDisplay.getText());
+            String name =accountName.getText();
+            String myEmail =email.getText();
+            //loat myInitBal= initBalance;
+
+            int accountId = Integer.parseInt(field.getText());
+           // String  myname = String.parseString(field.getText());
+
+            cashMachine.setAccountData(accountId, name, myEmail, 0);
+
+            AccountData accountDataDisplay =  cashMachine.getAccountData();
+            setLocalTextFields(accountDataDisplay);
+
+                btnExit.setDisable(false);
+                btnWithdraw.setDisable(false);
+                btnDeposit.setDisable(false);
+                amountField.setDisable(false);
+        }
+
+        });
+
+    Button btnClose = new Button("Cancel");
+        btnClose.setOnAction(e -> {
+
+        });
+
+        internalVbox.getChildren().addAll(accountDisplay,accountName, email, btnAdd, btnClose);
+        //internalVbox.getChildren().addAll(accountDisplay, btnAdd, btnClose);
+
+        return internalVbox;
+    }
+
+
 
 }
