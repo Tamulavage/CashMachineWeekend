@@ -9,13 +9,15 @@ public final class AccountData {
     private final String name;
     private final String email;
 
-    private final int balance;
+    private final float balance;
+    private  String alert;
 
-    AccountData(int id, String name, String email, int balance) {
+    AccountData(int id, String name, String email, float balance) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.balance = balance;
+        this.alert = "";
     }
 
     public int getId() {
@@ -30,15 +32,31 @@ public final class AccountData {
         return email;
     }
 
-    public int getBalance() {
+    public void setAlert(String alert) {
+
+        this.alert = alert;
+    }
+
+    public String getAlert() { return alert;}
+
+    public float getBalance() {
+        if(this.balance > 0)
+        {// reset alert
+            alert = "";
+        }
         return balance;
     }
 
     @Override
     public String toString() {
+        if(!alert.isEmpty()) {
+            alert = '\n' + "Alert: " + alert;
+        }
+
         return "Account id: " + id + '\n' +
                 "Name: " + name + '\n' +
                 "Email: " + email + '\n' +
-                "Balance: " + balance;
+                "Balance: " + balance
+                  +alert;
     }
 }

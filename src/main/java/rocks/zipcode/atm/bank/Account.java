@@ -15,28 +15,33 @@ public abstract class Account {
         return accountData;
     }
 
-    public void deposit(int amount) {
+    public void deposit(float amount) {
         updateBalance(getBalance() + amount);
     }
 
-    public boolean withdraw(int amount) {
+    public boolean withdraw(float amount) {
         if (canWithdraw(amount)) {
             updateBalance(getBalance() - amount);
+            if(0 > (getBalance() - amount))
+            {
+                accountData.setAlert("Warning : overdraft");
+            }
+
             return true;
         } else {
             return false;
         }
     }
 
-    protected boolean canWithdraw(int amount) {
+    protected boolean canWithdraw(float amount) {
         return getBalance() >= amount;
     }
 
-    public int getBalance() {
+    public float getBalance() {
         return accountData.getBalance();
     }
 
-    private void updateBalance(int newBalance) {
+    private void updateBalance(float newBalance) {
         accountData = new AccountData(accountData.getId(), accountData.getName(), accountData.getEmail(),
                 newBalance);
     }

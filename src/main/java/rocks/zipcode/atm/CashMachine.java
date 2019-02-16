@@ -22,6 +22,17 @@ public class CashMachine {
         accountData = data;
     };
 
+    public AccountData getAccountData (){
+        return  this.accountData;
+    }
+
+    public void setAccountData(int id, String name, String email, float initBalance){
+       tryCall(
+               () -> bank.newAccount("Basic", id , name, email, initBalance),
+               update
+       );
+    }
+
     public void login(int id) {
         tryCall(
                 () -> bank.getAccountById(id),
@@ -29,7 +40,7 @@ public class CashMachine {
         );
     }
 
-    public void deposit(int amount) {
+    public void deposit(float amount) {
         if (accountData != null) {
             tryCall(
                     () -> bank.deposit(accountData, amount),
@@ -38,7 +49,7 @@ public class CashMachine {
         }
     }
 
-    public void withdraw(int amount) {
+    public void withdraw(float amount) {
         if (accountData != null) {
             tryCall(
                     () -> bank.withdraw(accountData, amount),
@@ -50,6 +61,7 @@ public class CashMachine {
     public void exit() {
         if (accountData != null) {
             accountData = null;
+
         }
     }
 
