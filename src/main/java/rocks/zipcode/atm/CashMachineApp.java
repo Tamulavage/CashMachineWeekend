@@ -3,16 +3,17 @@ package rocks.zipcode.atm;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import rocks.zipcode.atm.bank.AccountData;
 import rocks.zipcode.atm.bank.Bank;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.layout.FlowPane;
+
+import javax.xml.soap.Text;
 
 /**
  * @author ZipCodeWilmington
@@ -33,6 +34,7 @@ public class CashMachineApp extends Application {
 
     private Parent createContent() {
         VBox vbox = new VBox(10);
+        //GridPane vbox = new GridPane();
         vbox.setPrefSize(600, 600);
         field.setMaxWidth( 250);
         field.setText("Account Number");
@@ -196,13 +198,16 @@ public class CashMachineApp extends Application {
         }
     }
 
-    private VBox createInternal() {
-        VBox internalVbox = new VBox(10);
-        internalVbox.setPrefSize(400, 400);
+    private GridPane createInternal() {
+       // VBox internalVbox = new VBox(10);
+        GridPane internalBox = new GridPane();
+        internalBox.setPrefSize(400, 400);
 
-        StackPane secLayout = new StackPane();
+        internalBox.setPadding(new Insets(10,10,10,10));
+        internalBox.setVgap(5);
+        internalBox.setHgap(5);
 
-        Scene secScene = new Scene(secLayout,400,400);
+        internalBox.setAlignment(Pos.CENTER);
 
 
         TextField accountDisplay = new TextField();
@@ -251,10 +256,25 @@ public class CashMachineApp extends Application {
 
         });
 
+        Label text1 = new Label("Account ID : ");
+        Label text2 = new Label("Your name : ");
+        Label text3 = new Label("Your e-mail : ");
 
-        internalVbox.getChildren().addAll(accountDisplay,accountName, email, btnAdd);
 
-        return internalVbox;
+        internalBox.add(text1,0,0);
+        internalBox.add(accountDisplay, 1, 0);
+
+        internalBox.add(text2,0,1);
+        internalBox.add(accountName, 1, 1);
+
+        internalBox.add(text3,0,2);
+        internalBox.add(email, 1, 2);
+
+        internalBox.add(btnAdd, 0, 3, 3, 1);
+
+        //internalBox.getChildren().addAll(accountDisplay,accountName, email, btnAdd);
+
+        return internalBox;
     }
 
 
