@@ -47,7 +47,6 @@ public class CashMachineApp extends Application {
 
 
 
-      //  Button btnDeposit = new Button("Deposit");
         btnDeposit.setDisable(true);
 
         btnDeposit.setOnAction(e -> {
@@ -59,7 +58,6 @@ public class CashMachineApp extends Application {
             setLocalTextFields(accountDataDisplay);
         });
 
-       // Button btnWithdraw = new Button("Withdraw");
         btnWithdraw.setDisable(true);
 
         btnWithdraw.setOnAction(e -> {
@@ -72,7 +70,6 @@ public class CashMachineApp extends Application {
 
         });
 
-      //  Button btnExit = new Button("Logout");
         btnExit.setDisable(true);
 
         btnExit.setOnAction(e -> {
@@ -155,19 +152,11 @@ public class CashMachineApp extends Application {
 
             Button btnClose = new Button("Add New Account");
         btnClose.setOnAction(b -> {
-            // int accountId = Integer.parseInt(field.getText());
-    /*        int accountId = 5;
-
-            cashMachine.setAccountData(accountId);
-            AccountData accountDataDisplay =  cashMachine.getAccountData();
-            setLocalTextFields(accountDataDisplay);*/
 
         });
 
 
 
-//            AccountData accountDataDisplay =  cashMachine.getAccountData();
- //           setLocalTextFields(accountDataDisplay);
 
         });
 
@@ -211,7 +200,6 @@ public class CashMachineApp extends Application {
         VBox internalVbox = new VBox(10);
         internalVbox.setPrefSize(400, 400);
 
-       // Label label = new Label("test");
         StackPane secLayout = new StackPane();
 
         Scene secScene = new Scene(secLayout,400,400);
@@ -247,10 +235,8 @@ public class CashMachineApp extends Application {
             field.setText(accountDisplay.getText());
             String name =accountName.getText();
             String myEmail =email.getText();
-            //loat myInitBal= initBalance;
 
             int accountId = Integer.parseInt(field.getText());
-           // String  myname = String.parseString(field.getText());
 
             cashMachine.setAccountData(accountId, name, myEmail, 0);
 
@@ -265,13 +251,8 @@ public class CashMachineApp extends Application {
 
         });
 
-    Button btnClose = new Button("Cancel");
-        btnClose.setOnAction(e -> {
 
-        });
-
-        internalVbox.getChildren().addAll(accountDisplay,accountName, email, btnAdd, btnClose);
-        //internalVbox.getChildren().addAll(accountDisplay, btnAdd, btnClose);
+        internalVbox.getChildren().addAll(accountDisplay,accountName, email, btnAdd);
 
         return internalVbox;
     }
